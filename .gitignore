@@ -7,7 +7,7 @@ plots.py
 
 # Ignoring directories
 # Both the directory itself and its contents will be ignored.
-__pychache__/
+__pycache__/
 
 # Ignoring files by extension
 # All files with these extensions will be ignored in
