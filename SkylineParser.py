@@ -112,6 +112,12 @@ class SkylineParser ( Parser ):
         def getRuleIndex(self):
             return SkylineParser.RULE_root
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRoot" ):
+                return visitor.visitRoot(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -149,6 +155,12 @@ class SkylineParser ( Parser ):
 
         def getRuleIndex(self):
             return SkylineParser.RULE_expr
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpr" ):
+                return visitor.visitExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -201,6 +213,12 @@ class SkylineParser ( Parser ):
 
         def getRuleIndex(self):
             return SkylineParser.RULE_variable
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariable" ):
+                return visitor.visitVariable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -263,6 +281,12 @@ class SkylineParser ( Parser ):
         def getRuleIndex(self):
             return SkylineParser.RULE_sky
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSky" ):
+                return visitor.visitSky(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -315,6 +339,12 @@ class SkylineParser ( Parser ):
         def getRuleIndex(self):
             return SkylineParser.RULE_simple
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimple" ):
+                return visitor.visitSimple(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -361,6 +391,12 @@ class SkylineParser ( Parser ):
 
         def getRuleIndex(self):
             return SkylineParser.RULE_compost
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCompost" ):
+                return visitor.visitCompost(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -412,6 +448,12 @@ class SkylineParser ( Parser ):
 
         def getRuleIndex(self):
             return SkylineParser.RULE_aleatori
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAleatori" ):
+                return visitor.visitAleatori(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -486,6 +528,12 @@ class SkylineParser ( Parser ):
 
         def getRuleIndex(self):
             return SkylineParser.RULE_operation
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOperation" ):
+                return visitor.visitOperation(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 

@@ -12,11 +12,11 @@ class Skyline:
 
     # returns the skyline's buildings list
     def getBuildingsList(self):
-        return bl
+        return self.bl
 
     # returns the skyline's id
     def getID(self):
-        return id
+        return self.id
 
     # retunrs the slyline's area
     def getArea(self):
@@ -98,3 +98,7 @@ class Skyline:
         z = b[2]
         x = b[0]
         return y*(z-x)
+
+    def random(n, h, w, xmin, xmax):
+        seed = 53
+        #TODO
