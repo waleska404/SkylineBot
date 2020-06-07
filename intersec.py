@@ -1,4 +1,4 @@
-buildings1 = [(1,2,3),(3,4,5),(4,6,6)]
+buildings1 = [(1,2,3),(3,3,5),(4,6,6)]
 lim11=1
 lim12=6
 
@@ -23,10 +23,24 @@ limRight = min(lim12, lim22)
  
 current = 0
 points = []
+
+edaux = edges1 + edges2
+edaux = sorted(edaux)
+print(edaux)
+edges = [edg for edg in edaux if(edg >= limLeft and edg <= limRight)]
+edges = set(edges)
+edges = list(edges)
+print(edges)
+
+buildings1bis = [b for b in buildings1 if((b[0] > limLeft and b[0] < limRight) or (b[2] > limLeft and b[2] < limRight) or (b[0] <= limLeft and b[2] >= limRight))]
+buildings2bis = [b for b in buildings2 if((b[0] > limLeft and b[0] < limRight) or (b[2] > limLeft and b[2] < limRight) or (b[0] <= limLeft and b[2] >= limRight))]
+buildings = buildings1bis + buildings2bis
+print('BUILDINGS')
+print(buildings)
   
 for i in edges:
   active = []
-  active.extend(building for building in buildings if (building[0] >= i and building[2] < i)) 
+  active.extend(building for building in buildings if (building[0] <= i and building[2] >= i)) 
   #current observed point is within borders of these buildings (active buildings)
   print(i,active)
   if not active: 
@@ -34,12 +48,14 @@ for i in edges:
     current = 0
     points.append((i,0))
     continue
-  max_h = max(building[1] for building in active)
-  if max_h != current:
+  min_h = min(building[1] for building in active)
+  print('MIN')
+  print(min_h)
+  if min_h != current:
     
     #if current highest point is lower then highest point of current active buildings change current highest point
-    current = max_h
-    points.append((i,max_h))
+    current = min_h
+    points.append((i,min_h))
      
 print(points)
 l = []
