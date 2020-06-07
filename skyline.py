@@ -8,6 +8,11 @@ class Skyline:
         self.id = id
         self.bl = bl  # bl = buildings list
 
+    # ##########SETTERS########### #
+
+    def setID(self, id2):
+        self.id = id2
+
     # ##########GETTERS########### #
 
     # returns the skyline's buildings list

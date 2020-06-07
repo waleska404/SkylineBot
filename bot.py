@@ -73,6 +73,14 @@ def load(update, context):
     s = pickle.load(infile)
     infile.close()
 
+############ NOT COMANDS MESSAGES PROCESSING ##########
+
+
+
+
+
+##########################################################
+
 # declara una constant amb el access token que llegeix de token.txt
 TOKEN = open('token.txt').read().strip()
 
@@ -86,6 +94,8 @@ dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(CommandHandler('author', author))
 
 dispatcher.add_handler(CommandHandler('createSkyline', createSkyline))
+
+dispatcher.add_handler(MessageHandler(?, ?))
 
 #dispatcher.add_handler(CommandHandler('lst', lst))
 #dispatcher.add_handler(CommandHandler('clean', clean))

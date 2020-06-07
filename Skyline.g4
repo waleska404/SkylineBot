@@ -17,7 +17,7 @@ compost : '['simple (','simple)*']';
 aleatori : '{'NUM','NUM','NUM','NUM','NUM'}';
 
 operation : '(' operation ')'
-         | MENYS operation
+         | MENYS operation 
          | operation MULT operation
          | operation MULT NUM
          | operation MES operation
