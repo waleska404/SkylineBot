@@ -28,16 +28,13 @@ class EvalVisitor(SkylineVisitor):
 
     
     def visitExpr(self, ctx:SkylineParser.ExprContext):
-        print('visitExpr:')
+        print('entro en visitExpr:')
         nvar = (ctx.variable())
         #nvar = int(len(ctx.variable(0)))
         nop = (ctx.operation())
-        print('nvar y nop:')
-        print(nvar)
-        print(nop)
-        print('nvar y nop')
 
         if (nvar):
+            ('entro en el id de nop')
             return self.visit(ctx.variable())
         elif (nop):
             print('entro en elif de nop')
@@ -46,18 +43,21 @@ class EvalVisitor(SkylineVisitor):
 
     
     def visitVariable(self, ctx:SkylineParser.VariableContext):
-        nsky = int(len(ctx.sky()))
-        nop = int(len(ctx.operation()))
-        var = str(ctx.VAR(0).getText())
-        if nsky == 1:
-            s = self.visit(ctx.sky(0))
+        print('entro en visit variable')
+        nsky = (ctx.sky())
+        nop = (ctx.operation())
+        var = str(ctx.VAR().getText())
+        if (nsky):
+            s = self.visit(ctx.sky())
             s.setID(var)
-            dic[var] = s
+            self.dic[var] = s
+            return s
 
-        elif nop == 1:
-            s = self.visit(ctx.operation(0))
+        elif (nop):
+            s = self.visit(ctx.operation())
             s.setID(var)
-            dic[var] = s
+            self.dic[var] = s
+            return s
 
     
     def visitSky(self, ctx:SkylineParser.SkyContext):
@@ -112,6 +112,7 @@ class EvalVisitor(SkylineVisitor):
 
 
     def visitAleatori(self, ctx:SkylineParser.AleatoriContext):
+        print('entro en visit aleatori')
         n = int(ctx.NUM(0).getText())
         h = int(ctx.NUM(1).getText())
         w = int(ctx.NUM(2).getText())
@@ -136,7 +137,8 @@ class EvalVisitor(SkylineVisitor):
         # brackets case
         if (nop) and (not nmult) and (not nmenys) and (not nmes):
             print('entro en if brackets')
-            return self.visit(ctx.operation())
+            s = self.visit(ctx.operation(0))
+            return s
 
         # mirror skyline case
         if (nop) and (nmenys) and (not nnum):
@@ -168,19 +170,28 @@ class EvalVisitor(SkylineVisitor):
         # union skylines case
         if (nop) and (nmes) and (not nnum):
              print('entro en if union')
+
              s1 = self.visit(ctx.operation(0))
              l1 = s1.getBuildingsList()
              print('l1:')
              print(l1)
              s2 = self.visit(ctx.operation(1))
              l2 = s2.getBuildingsList()
+
              print('l2:')
              print(l2)
-             s1.addSkyline(s2)
+             
+             ss1 = s1.addSkyline(s2)
+
              l3 = s1.getBuildingsList()
              print('buildinfs s3')
              print(l3)
-             return s1
+             id = s1.getID()
+             ss = self.dic[id]
+             ll = ss.getBuildingsList()
+             print('lis Buid DICCIONARIO s1')
+             print(ll)
+             return ss1
 
         # shift right skyline case
         if (nop) and (nmes) and (nnum):
@@ -205,12 +216,25 @@ class EvalVisitor(SkylineVisitor):
         if (nvar):
             print('entro en if n var')
             #comprobar que esta en el diccionario
-            var = str(ctx.VAR(0).getText())
+            var = str(ctx.VAR().getText())
             if (var in self.dic):
-                return dic[var]
+                dic2 = (self.dic).copy()
+                #dic2 = copy.deepcopy(dic22)
+                d2 = dic2[var] #saco el skyline con id Var
+                print('asig heach')
+                l = d2.getBuildingsList() 
+                print(l)
+                print('VOY A MODIFICAR')
+                dic2[var] = Skyline('oli',0,0,0)
+                id = (self.dic[var]).getID()
+                id2 = (dic2[var]).getID()
+                print(id)
+                print(id2)
+                return d2 #le devuelvo el skyline con id var
             else:
-                s = Skyline.Skyline(var, 0, 0, 0)
-                dic[var] = s
+                s = Skyline('null', 0, 0, 0)
+                #TODO NO SE COMO GESTIONARLO
+                #QUIZA DECIRLE QUE ESTA UTILIZANDO UNA VARIBALE SIN VALOR
                 return s
 
         # sky

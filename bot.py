@@ -1,4 +1,6 @@
 # importa la API de Telegram
+import datetime
+
 from telegram.ext import Updater, CommandHandler
 from telegram.ext import Filters, MessageHandler
 
@@ -44,28 +46,28 @@ def author(update, context):
         text=mssg)
 
 def createSkyline(update, context):
-    print("entro en la func createSkyline")
+    #print("entro en la func createSkyline")
     id = str(context.args[0])
-    print("pillo el primer arg")
+    #print("pillo el primer arg")
     x = int(context.args[1])
-    print("pillo el sec arg")
+    #print("pillo el sec arg")
     y = int(context.args[2])
-    print("pillo el terc arg")
+    #print("pillo el terc arg")
     x2 = int(context.args[3])
-    print("pillo el quart arg")
+    #print("pillo el quart arg")
 
     s = Skyline(id, x, y, x2)
-    print("creo skyline")
+    #print("creo skyline")
 
     s.plotProcessing()
-    print("hago el plotProcessing")
+    #print("hago el plotProcessing")
 
     id2 = id + '.png'
-    print(id2)
+    #print(id2)
     context.bot.send_photo(
         chat_id=update.effective_chat.id,
         photo=open(id2,'rb'))
-    print("supuestamente despues de enviar el mensaje")
+    #print("supuestamente despues de enviar el mensaje")
 
 def save(update, context):
     id = str(context.args[0])
@@ -87,35 +89,43 @@ def load(update, context):
 def noCommand(update, context):
     # get the text the user sent
     text = update.message.text
-    print('print 1:')
-    print(text)
-    print('print 1 fin')
+    #print('print 1:')
+    #print(text)
+    #print('print 1 fin')
 
     input_stream = InputStream(update.message.text)
-    print('ha hecho input_stream')
+    #print('ha hecho input_stream')
 
     lexer = SkylineLexer(input_stream)
-    print('ha hecho lexer')
+    #print('ha hecho lexer')
 
     token_stream = CommonTokenStream(lexer)
-    print('ha hecho token_stream')
+    #print('ha hecho token_stream')
 
     parser = SkylineParser(token_stream)
-    print('ha hecho parser')
+    #print('ha hecho parser')
 
     tree = parser.root()
-    print('ha hecho tree')
+    #print('ha hecho tree')
 
     visitor = EvalVisitor(context.user_data)
-    print('ha hecho visitor')
+    #print('ha hecho visitor')
 
     s = visitor.visit(tree)
-    print('ha hecho s')
+    #print('ha hecho s')
     
     s.plotProcessing()
-    print("hago el plotProcessing")
+    #print("hago el plotProcessing")
 
     id = s.getID()
+
+    #if id == 'null':
+     #   id = str(datetime.datetime.now())
+     #  id = id.replace(" ","")
+     #   id = id.replace(".","")
+     #   id = id.replace(":","")
+     #   id = id.replace("-","")
+    #id = 'plot'
     id2 = id + '.png'
     print(id2)
     context.bot.send_photo(
