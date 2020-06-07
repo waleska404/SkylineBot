@@ -92,7 +92,8 @@ class EvalVisitor(SkylineVisitor):
     
     def visitCompost(self, ctx:SkylineParser.CompostContext):
         l = [self.visit(x) for x in ctx.simple()]
-        s = Skyline('null', 0,0,0)
+        s = l[0]
+        l.pop(0)
         for elem in l:
             bl = elem.getBuildingsList()
             b = bl[0]
