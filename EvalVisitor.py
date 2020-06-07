@@ -141,7 +141,8 @@ class EvalVisitor(SkylineVisitor):
              print('entro en if intersection')
              s1 = self.visit(ctx.operation(0))
              s2 = self.visit(ctx.operation(1))
-             return s1.intersecSkyline(s2)
+             s1.intersecSkyline(s2)
+             return s1
 
         # replication skyline case
         if (nop) and (nmult) and (nnum):

@@ -8,6 +8,7 @@ class Skyline:
         self.id = id
         self.bl = bl  # bl = buildings list
 
+
     # ##########SETTERS########### #
 
     def setID(self, id2):
@@ -55,8 +56,21 @@ class Skyline:
 
     # do the intersection between skyobj and current skyline
     def intersecSkyline(self, skyobj):
-        bl2 = skyobj.getBuildingsList()
-        self.bl = listIntersection(self.bl, bl2)
+        print('intersec de skyline.py')
+        a = self.bl
+        print('a:')
+        print(a)
+
+        b = skyobj.getBuildingsList()
+        print('b:')
+        print(b)
+        result = []
+        for k in a:
+            if (k not in result) and (k in b):
+                result.append(k)
+        print('result:')
+        print(result)
+        self.bl = result
 
     # do the refelction of the current skyline
     def mirrorSkyline(self):
@@ -101,13 +115,7 @@ class Skyline:
 
     # ###########UTILS############ #
 
-    # returns the intersection of lists a and b
-    def listIntersection(a, b):
-        result = []
-        for k in a:
-            if (k not in result) and (k in b):
-                result.append(k)
-        return result
+    
     
     def buildingArea(b):
         y = b[1]
