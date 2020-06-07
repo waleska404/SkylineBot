@@ -43,7 +43,7 @@ class Skyline:
 
     # add a building to the current skyline
     def addBuilding(self, xmin, height, xmax):
-        self.bl += [(xmin, xmax, height)]
+        self.bl += [(xmin, height, xmax)]
 
     # add a skyline to the current skyline
     def addSkyline(self, skyobj):
@@ -99,13 +99,41 @@ class Skyline:
 
     # shift skyline n positions to the right
     def shiftRight(self, n):
+        l = []
+        print('shiftRight en skyline.py')
+        print('self.bl antes')
+        print(self.bl)
         for k in self.bl:
+            print(k)
+            k = list(k)
             k[0] += n
+            k[2] += n
+            k = tuple(k)
+            l.append(k)
+            print(k)
+        self.bl = l
+        print('self.bl despues:')
+        print(self.bl)
+
 
     # shift skyline n positions to the left
     def shiftLeft(self, n):
+        l = []
+        print('shiftLeft en skyline.py')
+        print('self.bl antes')
+        print(self.bl)
         for k in self.bl:
+            print(k)
+            k = list(k)
             k[0] -= n
+            k[2] -= n
+            k = tuple(k)
+            l.append(k)
+            print(k)
+        self.bl = l
+        print('self.bl despues:')
+        print(self.bl)
+
 
     # ########PROCESSING########## #
 

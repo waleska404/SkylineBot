@@ -91,12 +91,21 @@ class EvalVisitor(SkylineVisitor):
 
     
     def visitCompost(self, ctx:SkylineParser.CompostContext):
+        print('visitCompost')
         l = [self.visit(x) for x in ctx.simple()]
         s = l[0]
+        print('s:')
+        print(s)
+        print('l:')
         l.pop(0)
+        print(l)
         for elem in l:
             bl = elem.getBuildingsList()
+            print('bl dentro del for')
+            print(bl)
             b = bl[0]
+            print('b dentro del fot')
+            print(b)
             s.addBuilding(b[0],b[1],b[2])
         return s
 
@@ -157,7 +166,7 @@ class EvalVisitor(SkylineVisitor):
              return s1
 
         # union skylines case
-        if (nop) and (nmes):
+        if (nop) and (nmes) and (not nnum):
              print('entro en if union')
              s1 = self.visit(ctx.operation(0))
              l1 = s1.getBuildingsList()
@@ -177,15 +186,20 @@ class EvalVisitor(SkylineVisitor):
         if (nop) and (nmes) and (nnum):
              print('entro en if shift right')
              s1 = self.visit(ctx.operation(0))
-             n = self.visit(ctx.NUM(0).getText())
-             return s1.shiftRight(n)
+             n = int(ctx.NUM().getText())
+             l = s1.getBuildingsList()
+             print('bl en shitf right de eval')
+             print(l)
+             s1.shiftRight(n)
+             return s1
 
         # shift left skyline case
         if (nop) and (nmenys) and (nnum):
              print('entro en if shift left')
              s1 = self.visit(ctx.operation(0))
-             n = self.visit(ctx.NUM(0))
-             return s1.shiftLeft(n)
+             n = int(ctx.NUM().getText())
+             s1.shiftLeft(n)
+             return s1
 
         # VAR
         if (nvar):
