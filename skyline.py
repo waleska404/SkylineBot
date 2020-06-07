@@ -60,11 +60,17 @@ class Skyline:
 
     # do the refelction of the current skyline
     def mirrorSkyline(self):
-        self.bl = self.bl.reverse()
+        print('mirrorSkyline de la skyline.py')
+        print(self.bl)
+        l = self.bl
+        l.reverse()
+        print(l)
+        self.bl = l
+        print('salgo de mirrorSkyline')
 
     # replicate the skyline n times
     def replicateSkyline(self, n):
-        for k in range(n):
+        for k in range(n-1):
             self.bl += self.bl
 
     # shift skyline n positions to the right

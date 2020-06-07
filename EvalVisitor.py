@@ -92,7 +92,7 @@ class EvalVisitor(SkylineVisitor):
     
     def visitCompost(self, ctx:SkylineParser.CompostContext):
         l = [self.visit(x) for x in ctx.simple()]
-        s = Skyline.Skyline('null', 0,0,0)
+        s = Skyline('null', 0,0,0)
         for elem in l:
             bl = elem.getBuildingsList()
             b = bl[0]
@@ -132,10 +132,11 @@ class EvalVisitor(SkylineVisitor):
         if (nop) and (nmenys) and (not nnum):
              print('entro en if mirror')
              s1 = self.visit(ctx.operation(0))
-             return s1.mirrorSkyline()
+             s1.mirrorSkyline()
+             return s1
 
         # intersection skyline case
-        if (nop) and (nmult):
+        if (nop) and (nmult) and (not nnum):
              print('entro en if intersection')
              s1 = self.visit(ctx.operation(0))
              s2 = self.visit(ctx.operation(1))
@@ -145,8 +146,13 @@ class EvalVisitor(SkylineVisitor):
         if (nop) and (nmult) and (nnum):
              print('entro en if replication')
              s1 = self.visit(ctx.operation(0))
-             n = self.visit(ctx.NUM(0).getText())
-             return s1.replicateSkyline(n)
+             l = s1.getBuildingsList()
+             print(l)
+
+             n = int(ctx.NUM().getText())
+             print(n)
+             s1.replicateSkyline(n)
+             return s1
 
         # union skylines case
         if (nop) and (nmes):
