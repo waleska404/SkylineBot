@@ -46,7 +46,12 @@ class Skyline:
 
     # add a skyline to the current skyline
     def addSkyline(self, skyobj):
+        print('addSkyline from skyline.py')
+        print(self.bl)
+        print(skyobj.getBuildingsList())
         self.bl += skyobj.getBuildingsList()
+        print(self.bl)
+
 
     # do the intersection between skyobj and current skyline
     def intersecSkyline(self, skyobj):

@@ -1,11 +1,20 @@
 # importa la API de Telegram
 from telegram.ext import Updater, CommandHandler
+from telegram.ext import Filters, MessageHandler
 
 from telegram import ParseMode
-
 from skyline import Skyline
 
+import sys
+from antlr4 import *
+from SkylineLexer import SkylineLexer
+from SkylineParser import SkylineParser
+from EvalVisitor import EvalVisitor
+
+
 import pickle
+
+
 
 # hace las inicializaciones pertinentes y da la bienvenida
 def start(update, context):
@@ -75,7 +84,44 @@ def load(update, context):
 
 ############ NOT COMANDS MESSAGES PROCESSING ##########
 
+def noCommand(update, context):
+    # get the text the user sent
+    text = update.message.text
+    print('print 1:')
+    print(text)
+    print('print 1 fin')
 
+    input_stream = InputStream(update.message.text)
+    print('ha hecho input_stream')
+
+    lexer = SkylineLexer(input_stream)
+    print('ha hecho lexer')
+
+    token_stream = CommonTokenStream(lexer)
+    print('ha hecho token_stream')
+
+    parser = SkylineParser(token_stream)
+    print('ha hecho parser')
+
+    tree = parser.root()
+    print('ha hecho tree')
+
+    visitor = EvalVisitor(context.user_data)
+    print('ha hecho visitor')
+
+    s = visitor.visit(tree)
+    print('ha hecho s')
+    
+    s.plotProcessing()
+    print("hago el plotProcessing")
+
+    id = s.getID()
+    id2 = id + '.png'
+    print(id2)
+    context.bot.send_photo(
+        chat_id=update.effective_chat.id,
+        photo=open(id2,'rb'))
+    print("supuestamente despues de enviar el mensaje")
 
 
 
@@ -95,7 +141,7 @@ dispatcher.add_handler(CommandHandler('author', author))
 
 dispatcher.add_handler(CommandHandler('createSkyline', createSkyline))
 
-dispatcher.add_handler(MessageHandler(?, ?))
+dispatcher.add_handler(MessageHandler(Filters.text, noCommand))
 
 #dispatcher.add_handler(CommandHandler('lst', lst))
 #dispatcher.add_handler(CommandHandler('clean', clean))

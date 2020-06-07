@@ -6,27 +6,42 @@ else:
     from SkylineParser import SkylineParser
     from SkylineVisitor import SkylineVisitor
 
+from skyline import Skyline
 
-
-class TreeVisitor(SkylineVisitor):
+class EvalVisitor(SkylineVisitor):
     def __init__(self, dic):
         self.nivell = 0
-        self.dicc = dic
+        self.dic = dic
 
     
     def visitRoot(self, ctx:SkylineParser.RootContext):
-        return self.visit(ctx.expr(0))
+        print('visitROot:')
+        n = ctx.getChildCount()
+        l = next(ctx.getChildren()).getText()
+        print(l)
+        print(n)
+        s = self.visit(next(ctx.getChildren()))
+        print('get children')
+        return s
+        print ('return')
 
 
     
     def visitExpr(self, ctx:SkylineParser.ExprContext):
-        nvar = int(len(ctx.variable()))
-        nop = int(len(ctx.operation()))
+        print('visitExpr:')
+        nvar = (ctx.variable())
+        #nvar = int(len(ctx.variable(0)))
+        nop = (ctx.operation())
+        print('nvar y nop:')
+        print(nvar)
+        print(nop)
+        print('nvar y nop')
 
-        if nvar == 1:
-            return self.visit(ctx.variable(0))
-        elif nop == 1:
-            return self.visit(ctx.operation(0))
+        if (nvar):
+            return self.visit(ctx.variable())
+        elif (nop):
+            print('entro en elif de nop')
+            return self.visit(ctx.operation())
 
 
     
@@ -46,26 +61,31 @@ class TreeVisitor(SkylineVisitor):
 
     
     def visitSky(self, ctx:SkylineParser.SkyContext):
+        print('entro en visitSky:')
         #int(len(ctx.simple())) -> en teoria esto me devuelve el numero de simples que hay
-        if ctx.simple(0):
-            s1 = self.visit(ctx.simple(0))
+        if ctx.simple():
+            s1 = self.visit(ctx.simple())
             return s1
-        elif ctx.compost(0):
-            s1 = self.visit(ctx.compost(0))
+        elif ctx.compost():
+            s1 = self.visit(ctx.compost())
             return s1
         else:
-            s1 = self.visit(ctx.aleatori(0))
+            s1 = self.visit(ctx.aleatori())
             return s1
 
 
 
 
     def visitSimple(self, ctx:SkylineParser.SimpleContext):
+        print('entro en simple')
         xmin = int(ctx.NUM(0).getText())
         h = int(ctx.NUM(1).getText())
         xmax = int(ctx.NUM(2).getText())
         n = 'null'
-        s = Skyline.Skyline(n,xmin,h,xmax)
+        s = Skyline(n,xmin,h,xmax)
+        l = s.getBuildingsList()
+        print('skyline simple:')
+        print(l)
         return s
 
 
@@ -94,58 +114,77 @@ class TreeVisitor(SkylineVisitor):
 
     
     def visitOperation(self, ctx:SkylineParser.OperationContext):
-        nop = int(len(ctx.operation()))
-        nmenys = int(len(ctx.MENYS()))
-        nmult = int(len(ctx.MULT()))
-        nmes = int(len(ctx.MES()))
-        nvar = int(len(ctx.VAR()))
-        nsky = int(len(ctx.sky()))
-        nnum = int(len(ctx.NUM()))
+        print('visito operation')
+        nop = (ctx.operation())
+        nmenys = (ctx.MENYS())
+        nmult = (ctx.MULT())
+        nmes = (ctx.MES())
+        nvar = (ctx.VAR())
+        nsky = (ctx.sky())
+        nnum = (ctx.NUM())
 
         # brackets case
-        if (nop == 1) and (nmult == 0) and (nmenys == 0) and (nmes == 0):
-            return self.visit(ctx.operation(0))
+        if (nop) and (not nmult) and (not nmenys) and (not nmes):
+            print('entro en if brackets')
+            return self.visit(ctx.operation())
 
         # mirror skyline case
-        if (nop == 1) and (nmenys == 1) and (nnum == 0):
+        if (nop) and (nmenys) and (not nnum):
+             print('entro en if mirror')
              s1 = self.visit(ctx.operation(0))
              return s1.mirrorSkyline()
 
         # intersection skyline case
-        if (nop == 2) and (nmult == 1):
+        if (nop) and (nmult):
+             print('entro en if intersection')
              s1 = self.visit(ctx.operation(0))
              s2 = self.visit(ctx.operation(1))
              return s1.intersecSkyline(s2)
 
         # replication skyline case
-        if (nop == 1) and (nmult == 1) and (nnum == 1):
+        if (nop) and (nmult) and (nnum):
+             print('entro en if replication')
              s1 = self.visit(ctx.operation(0))
              n = self.visit(ctx.NUM(0).getText())
              return s1.replicateSkyline(n)
 
         # union skylines case
-        if (nop == 2) and (nmes == 1):
+        if (nop) and (nmes):
+             print('entro en if union')
              s1 = self.visit(ctx.operation(0))
+             l1 = s1.getBuildingsList()
+             print('l1:')
+             print(l1)
              s2 = self.visit(ctx.operation(1))
-             return s1.addSkyline(s2)
+             l2 = s2.getBuildingsList()
+             print('l2:')
+             print(l2)
+             s1.addSkyline(s2)
+             l3 = s1.getBuildingsList()
+             print('buildinfs s3')
+             print(l3)
+             return s1
 
         # shift right skyline case
-        if (nop == 1) and (nmes == 1) and (nnum == 1):
+        if (nop) and (nmes) and (nnum):
+             print('entro en if shift right')
              s1 = self.visit(ctx.operation(0))
              n = self.visit(ctx.NUM(0).getText())
              return s1.shiftRight(n)
 
         # shift left skyline case
-        if (nop == 1) and (nmenys == 1) and (nnum == 1):
+        if (nop) and (nmenys) and (nnum):
+             print('entro en if shift left')
              s1 = self.visit(ctx.operation(0))
              n = self.visit(ctx.NUM(0))
              return s1.shiftLeft(n)
 
         # VAR
-        if (nvar == 1):
+        if (nvar):
+            print('entro en if n var')
             #comprobar que esta en el diccionario
             var = str(ctx.VAR(0).getText())
-            if var in self.dic 
+            if (var in self.dic):
                 return dic[var]
             else:
                 s = Skyline.Skyline(var, 0, 0, 0)
@@ -153,5 +192,9 @@ class TreeVisitor(SkylineVisitor):
                 return s
 
         # sky
-        if(nsky == 1):
-            return self.visit(ctx.sky(0))
+        if(nsky):
+            print('entro en el if de sky')
+            return self.visit(ctx.sky())
+
+
+
