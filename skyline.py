@@ -84,8 +84,18 @@ class Skyline:
 
     # replicate the skyline n times
     def replicateSkyline(self, n):
+        print('replicate de la skyline.py')
+        l = (self.bl).copy()
+        print('l')
+        print(l)
         for k in range(n-1):
-            self.bl += self.bl
+            print('dentro del for, k:')
+            print(k)
+            print('l:')
+            print(l)
+            print('self.bl:')
+            print(self.bl)
+            self.bl += l
 
     # shift skyline n positions to the right
     def shiftRight(self, n):
