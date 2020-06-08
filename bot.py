@@ -17,13 +17,13 @@ import os
 import pickle
 
 
-
 # hace las inicializaciones pertinentes y da la bienvenida
 def start(update, context):
     botname = context.bot.username
-    fullname = update.effective_chat.first_name 
+    fullname = update.effective_chat.first_name
     missatge = "¡Hola %s, bienvenida al Skyline bot! Yo soy %s, encantada." % (fullname, botname)
     context.bot.send_message(chat_id=update.effective_chat.id, text=missatge)
+
 
 # el bot contesta con una lista de todas las posibles comandas
 def help(update, context):
@@ -36,15 +36,16 @@ def help(update, context):
 - */save id* : Guarda un skyline definido con id: id.
 - */load id* : Carga un skyline que hayas guardado previamente con id: id.
 '''
-    context.bot.send_message(chat_id=update.message.chat_id, text=msg, \
-         parse_mode=ParseMode.MARKDOWN)
+    context.bot.send_message(chat_id=update.message.chat_id, text=msg, parse_mode=ParseMode.MARKDOWN)
+
 
 # información sobre el autor del bot
 def author(update, context):
     mssg = "La autora de este proyecto es Paula Boyano Ivars. Mail: paula.boyano@est.fib.upc.edu."
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
+
 
 # guardar un skyline
 def save(update, context):
@@ -52,16 +53,17 @@ def save(update, context):
     ide = str(context.args[0])
     if (ide in context.user_data):
         s = context.user_data[ide]
-        filename = ide +'.sky'
+        filename = ide + '.sky'
         outfile = open(filename, 'wb')
-        pickle.dump(s,outfile)
+        pickle.dump(s, outfile)
         outfile.close()
-        mssg = "El skyline con identificador '%s' ha sido guardado." %(ide)
+        mssg = "El skyline con identificador '%s' ha sido guardado." % (ide)
     else:
         mssg = "El identificador que estas intentando guardar no está definido."
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
+
 
 # cargar un skyline
 def load(update, context):
@@ -72,12 +74,13 @@ def load(update, context):
         s = pickle.load(infile)
         context.user_data[ide] = s
         infile.close()
-        mssg = "El skyline con identificador '%s' se ha cargado." %(ide)
+        mssg = "El skyline con identificador '%s' se ha cargado." % (ide)
     else:
         mssg = "El skyline que estas intentando cargar no ha sido guardado previamente."
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
+
 
 # listar los skylines definidos
 def lst(update, context):
@@ -92,21 +95,20 @@ def lst(update, context):
     else:
         mssg = 'No hay identificadores definidos.'
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
+
 
 # eliminar los skylines definidos
 def clean(update, context):
     mssg = 'Los identificadores definidos hasta el momento han sido borrados.'
     (context.user_data).clear()
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
-    
 
 
-
-############ NOT COMANDS MESSAGES PROCESSING ##########
+# ########### NOT COMANDS MESSAGES PROCESSING ######### #
 
 def noCommand(update, context):
 
@@ -118,7 +120,7 @@ def noCommand(update, context):
     tree = parser.root()
     visitor = EvalVisitor(context.user_data)
     s = visitor.visit(tree)
-    
+
     s.plotProcessing()
 
     id = s.getID()
@@ -128,19 +130,15 @@ def noCommand(update, context):
         id2 = id + '.png'
         context.bot.send_photo(
             chat_id=update.effective_chat.id,
-            photo=open(id2,'rb'))
+            photo=open(id2, 'rb'))
         a = s.getArea()
         h = s.getHeight()
         a = str(a)
         h = str(h)
         mssg = "area: " + a + "\naltura: " + h
     context.bot.send_message(
-        chat_id=update.effective_chat.id, 
+        chat_id=update.effective_chat.id,
         text=mssg)
-
-
-
-
 
 ##########################################################
 
