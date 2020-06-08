@@ -270,18 +270,16 @@ class Skyline:
 
     # returns the especified random skyline
     def randomFunc(self, n, h, w, xmin, xmax):
-        a = random.randint(xmin, xmax-w)
+        a = random.randint(xmin, xmax-1)
         b = random.randint(0, h)
-        ww = random.randint(1, w)
-        c = a+ww
+        c = random.randint(a+1, xmax)
         s = Skyline('null', a, b, c)
         it = 0
         nn = n-1
         while it < n-1:
             a2 = random.randint(xmin, xmax-1)
             b2 = random.randint(0, h)
-            ww2 = random.randint(1, w)
-            c2 = a2+ww2
+            c2 = random.randint(a2+1, xmax)
             s.addBuilding(a2, b2, c2)
             it += 1
         l = s.getBuildingsList()

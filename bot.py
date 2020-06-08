@@ -9,9 +9,9 @@ from skyline import Skyline
 
 import sys
 from antlr4 import *
-from SkylineLexer import SkylineLexer
-from SkylineParser import SkylineParser
-from EvalVisitor import EvalVisitor
+from cl.SkylineLexer import SkylineLexer
+from cl.SkylineParser import SkylineParser
+from cl.EvalVisitor import EvalVisitor
 
 import os
 import pickle

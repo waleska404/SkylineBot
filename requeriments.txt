@@ -1,0 +1,8 @@
+###### Requirements ######
+matplotlib
+pickle
+python-telegram-bot
+datetime
+os
+sys
+random
