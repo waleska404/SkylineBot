@@ -25,8 +25,8 @@ $ pip3 install -r requeriments.txt
 Una vez instaladas las librerias necesarias hace falta token.
 
  1. Instalar Telegram en caso de no tenerlo.
- 1. Visitar a @BotFather.
- 1. Utilizar el comando ** /newbot **  y proporcionar la información requerida para obtener un token.  (Para información mas detallada ver https://core.telegram.org/bots#6-botfather. )
+ 1. Visitar a [@BotFather](https://telegram.me/BotFather "@BotFather").
+ 1. Utilizar el comando **/newbot**  y proporcionar la información requerida para obtener un token.  (Para información mas detallada ver https://core.telegram.org/bots#6-botfather. )
 
 Copia el token y pegalo en archivo **token.txt** en la misma carpeta que **bot.py**.
 
@@ -35,7 +35,7 @@ Ahora ya es posible ejecutar el bot:
 ```
 $ python3  bot.py
 ```
-Ahora con el link que @BotFather ha proporcionado podemos ir al chat del bot e interactuar con él.
+Ahora con el link que [@BotFather](https://telegram.me/BotFather "@BotFather") ha proporcionado podemos ir al chat del bot e interactuar con él.
 
 
 ## Interacciones con el bot
@@ -45,7 +45,7 @@ Ahora con el link que @BotFather ha proporcionado podemos ir al chat del bot e i
 ### Comandos
 
 - **/start**: Inicia la conversación conmigo.
-- **/help: **Obten una lista de todos los comandos que me puedes enviar.
+- **/help:** Obten una lista de todos los comandos que me puedes enviar.
 - **/author:** Información sobre el autor de este bot.
 - **/lst:** Muestra los identificadores definidos y su correspondiente area.
 - **/clean:** Borra todos los identificadores definidos.
@@ -56,7 +56,7 @@ Ahora con el link que @BotFather ha proporcionado podemos ir al chat del bot e i
 
 ### Lenguaje
 
-####Creación de skylines
+#### Creación de skylines
 
 ##### Simple
 Para crear un skyline simple con un edificio basta con especificar: ```(xmin, altura, xmax)``` donde **xmin** define la posición inicial del edificio, **xmax** la posición final, y **altura** la altura.
@@ -74,12 +74,12 @@ Para generar un skyline aleatorio indicamos: ```{n, h, w, xmin, xmax}``` donde *
 
 [![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-03.png?token=AGIVB647FYCF7FBW74ZSX6C647CMC)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-03.png?token=AGIVB647FYCF7FBW74ZSX6C647CMC)
 
-####Asignación
+#### Asignación
 En caso de querer darle un nombre a un skyline y poder operar con él solamente espeficicando su ID podemos hacer una asignación de la forma: ```a := (1,2,3)``` donde **'a'** corresponderia al ID del skyline (1,2,3).
 
 [![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-25.png?token=AGIVB6YS7HN6QAYPTAXCEG2647CSI)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-25.png?token=AGIVB6YS7HN6QAYPTAXCEG2647CSI)
 
-####Operaciones
+#### Operaciones
 Se pueden realizar las siguientes operaciones con skylines:
 
 - Unión: ```skyline + skyline```
