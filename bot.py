@@ -66,7 +66,29 @@ def load(update, context):
     print('salgo en load')
 
 def lst(update, context):
+    k = (context.user_data).keys()
+    mssg = 'Los identificadores definidos hasta el momento son: '
+    for i in k:
+        s = context.user_data[i]
+        a = s.getArea()
+        m = 'id: ' + str(i) + ', area: ' + str(a)
+        mssg += m
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=mssg)
+
+def clean(update, context):
+    print('ENTRO EN CLEAN')
+    mssg = 'Los identificadores definidos hasta el momento han sido borrados.'
+    (context.user_data).clear()
+    print('HE BORRADO EL DICC')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=mssg)
+    print('SALGO DE CLEAN')
     
+
 
 
 ############ NOT COMANDS MESSAGES PROCESSING ##########
@@ -149,14 +171,10 @@ dispatcher.add_handler(CommandHandler('author', author))
 
 dispatcher.add_handler(CommandHandler('save', save))
 dispatcher.add_handler(CommandHandler('load', load))
+dispatcher.add_handler(CommandHandler('clean', clean))
 dispatcher.add_handler(CommandHandler('lst', lst))
 
 dispatcher.add_handler(MessageHandler(Filters.text, noCommand))
-
-#dispatcher.add_handler(CommandHandler('lst', lst))
-#dispatcher.add_handler(CommandHandler('clean', clean))
-#dispatcher.add_handler(CommandHandler('save', save))
-#dispatcher.add_handler(CommandHandler('load', load))
 
 
 # engega el bot
