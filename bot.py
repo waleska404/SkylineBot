@@ -39,24 +39,23 @@ def help(update, context):
     context.bot.send_message(chat_id=update.message.chat_id, text=msg, \
          parse_mode=ParseMode.MARKDOWN)
 
+# información sobre el autor del bot
 def author(update, context):
     mssg = "La autora de este proyecto es Paula Boyano Ivars. Mail: paula.boyano@est.fib.upc.edu."
     context.bot.send_message(
         chat_id=update.effective_chat.id, 
         text=mssg)
 
+# guardar un skyline
 def save(update, context):
-    print('entro en save')
 
     ide = str(context.args[0])
     if (ide in context.user_data):
-        print('entro en el if')
         s = context.user_data[ide]
         filename = ide +'.sky'
         outfile = open(filename, 'wb')
         pickle.dump(s,outfile)
         outfile.close()
-        print('salego en save')
         mssg = "El skyline con identificador '%s' ha sido guardado." %(ide)
     else:
         mssg = "El identificador que estas intentando guardar no está definido."
@@ -64,8 +63,8 @@ def save(update, context):
         chat_id=update.effective_chat.id, 
         text=mssg)
 
+# cargar un skyline
 def load(update, context):
-    print('entro en load')
     ide = str(context.args[0])
     filename = ide + '.sky'
     if os.path.isfile(filename):
@@ -73,7 +72,6 @@ def load(update, context):
         s = pickle.load(infile)
         context.user_data[ide] = s
         infile.close()
-        print('salgo en load')
         mssg = "El skyline con identificador '%s' se ha cargado." %(ide)
     else:
         mssg = "El skyline que estas intentando cargar no ha sido guardado previamente."
@@ -81,6 +79,7 @@ def load(update, context):
         chat_id=update.effective_chat.id, 
         text=mssg)
 
+# listar los skylines definidos
 def lst(update, context):
     k = (context.user_data).keys()
     if k:
@@ -96,15 +95,13 @@ def lst(update, context):
         chat_id=update.effective_chat.id, 
         text=mssg)
 
+# eliminar los skylines definidos
 def clean(update, context):
-    print('ENTRO EN CLEAN')
     mssg = 'Los identificadores definidos hasta el momento han sido borrados.'
     (context.user_data).clear()
-    print('HE BORRADO EL DICC')
     context.bot.send_message(
         chat_id=update.effective_chat.id, 
         text=mssg)
-    print('SALGO DE CLEAN')
     
 
 
@@ -112,61 +109,31 @@ def clean(update, context):
 ############ NOT COMANDS MESSAGES PROCESSING ##########
 
 def noCommand(update, context):
-    # get the text the user sent
+
     text = update.message.text
-    #print('print 1:')
-    #print(text)
-    #print('print 1 fin')
-
     input_stream = InputStream(update.message.text)
-    #print('ha hecho input_stream')
-
     lexer = SkylineLexer(input_stream)
-    #print('ha hecho lexer')
-
     token_stream = CommonTokenStream(lexer)
-    #print('ha hecho token_stream')
-
     parser = SkylineParser(token_stream)
-    #print('ha hecho parser')
-
     tree = parser.root()
-    #print('ha hecho tree')
-
     visitor = EvalVisitor(context.user_data)
-    #print('ha hecho visitor')
-
     s = visitor.visit(tree)
-    #print('ha hecho s')
     
     s.plotProcessing()
-    #print("hago el plotProcessing")
 
     id = s.getID()
     if id == 'NOEXISTE404':
         mssg = 'Ese identificador no está definido.'
     else:
-    #if id == 'null':
-     #   id = str(datetime.datetime.now())
-     #  id = id.replace(" ","")
-     #   id = id.replace(".","")
-     #   id = id.replace(":","")
-     #   id = id.replace("-","")
-    #id = 'plot'
         id2 = id + '.png'
-        print(id2)
         context.bot.send_photo(
             chat_id=update.effective_chat.id,
             photo=open(id2,'rb'))
-        print("supuestamente despues de enviar el mensaje")
         a = s.getArea()
-        print(a, 'area en bot')
         h = s.getHeight()
-        print(h, 'height en bot')
         a = str(a)
         h = str(h)
         mssg = "area: " + a + "\naltura: " + h
-    print(mssg)
     context.bot.send_message(
         chat_id=update.effective_chat.id, 
         text=mssg)

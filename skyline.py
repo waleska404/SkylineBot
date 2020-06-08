@@ -29,27 +29,19 @@ class Skyline:
 
     # retunrs the slyline's area
     def getArea(self):
-        print('ENTRO EN GET AREA')
         self.noOverlapping()
-        print('salgo de no noOverlapping')
-        print(self.bl)
         suma = 0
         for k in self.bl:
-            print('dentro del for')
             s = self.buildingArea(k)
             suma += s
-        print('VOY A SLAIR')
         return suma
 
     # returns the skyline's height
     def getHeight(self):
-        print('ENTRE EN GET HEIGH')
         maxi = 0
         for k in self.bl:
             if k[1] > maxi:
                 maxi = k[1]
-        print('VOY A SALIR')
-        print(maxi)
         return maxi
 
 
@@ -57,15 +49,11 @@ class Skyline:
 
     # add a building to the current skyline
     def addBuilding(self, xmin, height, xmax):
-        print('entro en addBuilding')
         self.bl += [(xmin, height, xmax)]
-        print('salgo de addBuilding')
+    
 
-    # add a skyline to the current skyline
+    # returns the union of two skylines
     def addSkyline(self, skyobj):
-        #print('addSkyline from skyline.py')
-        #print(self.bl)
-        #print(skyobj.getBuildingsList())
         l1 = (self.bl).copy()
         l2 = skyobj.getBuildingsList()
         l3 = l1+l2
@@ -77,12 +65,9 @@ class Skyline:
         s.noOverlapping()
         return s
 
-        #print(self.bl)
-
 
     # return the intersection between skyobj and current skyline
     def intersecSkyline(self, skyobj):
-        print('ENTRO intersec de skyline.py')
         bl1 = (self.bl).copy()
         bl2 = skyobj.getBuildingsList()
  
@@ -100,17 +85,17 @@ class Skyline:
   
         edges1.extend([building[0],building[2]] for building in bl1)
       
-        edges1 = (sum(edges1,[])) #sorting and flatening the list of building edges
-        #print(edges1)
+        edges1 = (sum(edges1,[])) 
+        
 
         edges2.extend([building[0],building[2]] for building in bl2)
-        edges2 = (sum(edges2,[])) #sorting and flatening the list of building edges
-        #print(edges2)
+        edges2 = (sum(edges2,[])) 
+        
 
         edaux = edges1 + edges2
         edaux = sorted(edaux)
  
-        #print(edaux)
+        
         edges = [edg for edg in edaux if(edg >= limLeft and edg <= limRight)]
         edges = set(edges)
         edges = list(edges)
@@ -127,8 +112,6 @@ class Skyline:
             active.extend(building for building in buildings if ((building[0] <= i and building[2] > i) or (building[0] < i and building[2] > i)))
             
             if len(active) <= 1: 
-                #print('ENTRO EN NOT ACTIVE')
-                #if there is no active buildings, highest point is 0
                 current = 0
                 points.append((i,0))
                 continue
@@ -136,14 +119,11 @@ class Skyline:
             min_ed = i
             
             if min_h != current:
-            #if current highest point is lower then highest point of current active buildings change current highest point
                 current = min_h
                 points.append((i,min_h))
 
-        #print('POINTS:')
         last = edges[-1]
         points.append((last, 0))
-        print(points)
         l = []
         for index, item in enumerate(points):
             if index < len(points)-1:
@@ -154,7 +134,6 @@ class Skyline:
                 if b != 0:
                     l.append((a,b,c))
 
-        #print(l)
         elem = l[0]
         l.pop(0)
         s = Skyline('null',elem[0],elem[1],elem[2])
@@ -165,12 +144,9 @@ class Skyline:
         return s  
 
 
-
-        
-
-    # do the refelction of the current skyline
+    # returns the refelction of the current skyline
     def mirrorSkyline(self):
-        #print('mirrorSkyline de la skyline.py')
+        
         l = (self.bl).copy()
         l2 = []
 
@@ -229,8 +205,6 @@ class Skyline:
 
     # replicate the skyline n times
     def replicateSkyline(self, n):
-        print('replicate de la skyline.py')
-        
         l = (self.bl).copy()
         lr = (self.bl).copy()
         w = 0
@@ -246,21 +220,9 @@ class Skyline:
         w = maxx - minx
 
         ampOrig = w
-        #print('AMPLITUD DEL SKYLINE')
-        #print(w)
-        
-        #print('l')
-        #print(l)
 
         for k in range(n-1):
             laux = []
-            #print('dentro del for, k:')
-            #print(k)
-            #print('l:')
-            #print(l)
-            #print('self.bl:')
-            #print(self.bl)
-            #para cada elemento de l aumentarle la amplitud correspndiente
             for j in l:
                 j = list(j)
                 j[0] += w
@@ -268,8 +230,6 @@ class Skyline:
                 j = tuple(j)
                 laux.append(j)
             w = w + ampOrig
-            #print('l:')
-            #print(l)
             lr += laux
 
         elem = lr[0]
@@ -285,17 +245,12 @@ class Skyline:
     def shiftRight(self, n):
         l = []
         aux = (self.bl).copy()
-        #print('shiftRight en skyline.py')
-        #print('self.bl antes')
-        #print(self.bl)
         for k in aux:
-            #print(k)
             k = list(k)
             k[0] += n
             k[2] += n
             k = tuple(k)
             l.append(k)
-            #print(k)
         
         elem = l[0]
         l.pop(0)
@@ -305,25 +260,18 @@ class Skyline:
         
         lr2 = s.getBuildingsList()
         return s  
-        #print('self.bl despues:')
-        #print(self.bl)
 
 
     # shift skyline n positions to the left
     def shiftLeft(self, n):
         l = []
         aux = (self.bl).copy()
-        #print('shiftLeft en skyline.py')
-        #print('self.bl antes')
-        #print(self.bl)
         for k in aux:
-            #print(k)
             k = list(k)
             k[0] -= n
             k[2] -= n
             k = tuple(k)
             l.append(k)
-            #print(k)
         elem = l[0]
         l.pop(0)
         s = Skyline('null',elem[0],elem[1],elem[2])
@@ -331,24 +279,38 @@ class Skyline:
             s.addBuilding(k[0],k[1],k[2])
         
         lr2 = s.getBuildingsList()
-        return s  
-        #print('self.bl despues:')
-        #print(self.bl)
+        return s
+    
+    # returns the especified random skyline
+    def randomFunc(self,n, h, w, xmin, xmax):
+        a = random.randint(xmin, xmax-1)
+        b = random.randint(0, h)
+        c = random.randint(a+1, xmax)
+        s = Skyline('null',a,b,c)
+        it = 0
+        nn = n-1
+        while it < n-1:
+            a2 = random.randint(xmin, xmax-1)
+            b2 = random.randint(0, h)
+            c2 = random.randint(a2+1, xmax)
+            s.addBuilding(a2,b2,c2)
+            it += 1
+        l = s.getBuildingsList()
+        s.noOverlapping()
+        return s
 
 
     # ########PROCESSING########## #
-
+    
+    # creates the skyline's plot
     def plotProcessing(self):
         if self.id == 'null':
-            #print('entra if self id = null')
             id = str(datetime.datetime.now())
             id = id.replace(" ","")
             id = id.replace(".","")
             id = id.replace(":","")
             id = id.replace("-","")
-            #print(id)
             self.id = id
-        #print(self.id)
         xl = []
         widthl = []
         heightl = []
@@ -359,10 +321,7 @@ class Skyline:
             heightl += [k[1]]
         plt.bar(xl, heightl, widthl, 0, align='edge')
         plt.savefig(str(self.id))
-        #print('antes del clear')
         plt.clf()
-        #print('despues del clear')
-
 
 
     # ###########UTILS############ #
@@ -396,79 +355,12 @@ class Skyline:
         x = b[0]
         a = (y+1)*(z-x)
         return a
-
-    def randomFunc(self,n, h, w, xmin, xmax):
-        print('ENTRO EN RANDOM FUNC')
-        a = random.randint(xmin, xmax-1)
-        b = random.randint(0, h)
-        c = random.randint(a+1, xmax)
-        s = Skyline('null',a,b,c)
-        it = 0
-        nn = n-1
-        while it < n-1:
-            a2 = random.randint(xmin, xmax-1)
-            b2 = random.randint(0, h)
-            c2 = random.randint(a2+1, xmax)
-            s.addBuilding(a2,b2,c2)
-            it += 1
-        l = s.getBuildingsList()
-        s.noOverlapping()
-        print('LISTA DE S: ', l)
-
-        return s
-
-    def partition(self, array, start, end):
-        pivot = array[start]
-        low = start + 1
-        high = end
-
-        while True:
-            # If the current value we're looking at is larger than the pivot
-            # it's in the right place (right side of pivot) and we can move left,
-            # to the next element.
-            # We also need to make sure we haven't surpassed the low pointer, since that
-            # indicates we have already moved all the elements to their correct side of the pivot
-             while low <= high and self.graterEq(array[high],pivot):
-                high = high - 1
-
-            # Opposite process of the one above
-             while low <= high and self.lowerEq(array[low],pivot):
-                low = low + 1
-
-            # We either found a value for both high and low that is out of order
-            # or low is higher than high, in which case we exit the loop
-             if low <= high:
-                array[low], array[high] = array[high], array[low]
-                # The loop continues
-             else:
-                # We exit out of the loop
-                break
-
-        array[start], array[high] = array[high], array[start]
-
-        return high
-
-    def quickSort(self, array, start, end):
-        if start >= end:
-            return
-
-        p = self.partition(array, start, end)
-        self.quickSort(array, start, p-1)
-        self.quickSort(array, p+1, end)
-
-
-    def sortSkyline(self):
-        length = len(self.bl)
-        bl = self.bl
-        self.quickSort(bl, 0, length-1)
     
     def noOverlapping(self):
         buildings = self.bl
         edges = []
         edges.extend([building[0],building[2]] for building in buildings)
-        print(edges)
-        edges = sorted(sum(edges,[])) #sorting and flatening the list of building edges
-        print(edges)
+        edges = sorted(sum(edges,[])) 
  
         current = 0
         points = []
@@ -476,20 +368,15 @@ class Skyline:
         for i in edges:
             active = []
             active.extend(building for building in buildings if (building[0] <= i and building[2] > i)) 
-            #current observed point is within borders of these buildings (active buildings)
-            print(i,active)
             if not active: 
-                #if there is no active buildings, highest point is 0
                 current = 0
                 points.append((i,0))
                 continue
             max_h = max(building[1] for building in active)
             if max_h != current:
-                #if current highest point is lower then highest point of current active buildings change current highest point
                 current = max_h
                 points.append((i,max_h))
      
-        print(points)
         l = []
         for index, item in enumerate(points):
             if index < len(points)-1:
