@@ -66,14 +66,7 @@ def load(update, context):
     print('salgo en load')
 
 def lst(update, context):
-    print('entro en load')
-    id = str(context.args[0])
-    filename = id + '.sky'
-    infile = open(filename, 'rb')
-    s = pickle.load(infile)
-    context.user_data[id] = s
-    infile.close()
-    print('salgo en load')
+    
 
 
 ############ NOT COMANDS MESSAGES PROCESSING ##########
