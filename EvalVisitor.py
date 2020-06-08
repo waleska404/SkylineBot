@@ -105,8 +105,12 @@ class EvalVisitor(SkylineVisitor):
             print(bl)
             b = bl[0]
             print('b dentro del fot')
-            print(b)
+            print(b[0])
             s.addBuilding(b[0],b[1],b[2])
+
+        print("voy a retornar s")
+        lll = s.getBuildingsList()
+        print(lll)
         return s
 
 
@@ -152,8 +156,11 @@ class EvalVisitor(SkylineVisitor):
              print('entro en if intersection')
              s1 = self.visit(ctx.operation(0))
              s2 = self.visit(ctx.operation(1))
-             s1.intersecSkyline(s2)
-             return s1
+             r = s1.intersecSkyline(s2)
+             print('PRINT DE R')
+             lr = r.getBuildingsList()
+             print(lr)
+             return r
 
         # replication skyline case
         if (nop) and (nmult) and (nnum):
@@ -183,14 +190,14 @@ class EvalVisitor(SkylineVisitor):
              
              ss1 = s1.addSkyline(s2)
 
-             l3 = s1.getBuildingsList()
+             l3 = ss1.getBuildingsList()
              print('buildinfs s3')
              print(l3)
-             id = s1.getID()
-             ss = self.dic[id]
-             ll = ss.getBuildingsList()
-             print('lis Buid DICCIONARIO s1')
-             print(ll)
+             #id = ss1.getID()
+             #ss = self.dic[id]
+             #ll = ss.getBuildingsList()
+             #print('lis Buid DICCIONARIO s1')
+             #print(ll)
              return ss1
 
         # shift right skyline case
