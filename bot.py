@@ -20,9 +20,11 @@ import pickle
 # hace las inicializaciones pertinentes y da la bienvenida
 def start(update, context):
     botname = context.bot.username
-    fullname = update.effective_chat.first_name
-    missatge = "¡Hola %s, bienvenida al Skyline bot! Yo soy %s, encantada." % (fullname, botname)
+    username = update.effective_chat.first_name
+    missatge = "¡Hola %s, bienvenida al Skyline bot! Yo soy %s, encantada." % (username, botname)
     context.bot.send_message(chat_id=update.effective_chat.id, text=missatge)
+    if not os.path.isdir(username):
+        os.mkdir(username)
 
 
 # el bot contesta con una lista de todas las posibles comandas
@@ -49,11 +51,13 @@ def author(update, context):
 
 # guardar un skyline
 def save(update, context):
-
+    root = os.getcwd()
     ide = str(context.args[0])
+    username = update.effective_chat.first_name
+    path = root + '/' + username + '/'
     if (ide in context.user_data):
         s = context.user_data[ide]
-        filename = ide + '.sky'
+        filename = path + ide + '.sky'
         outfile = open(filename, 'wb')
         pickle.dump(s, outfile)
         outfile.close()
@@ -68,7 +72,9 @@ def save(update, context):
 # cargar un skyline
 def load(update, context):
     ide = str(context.args[0])
-    filename = ide + '.sky'
+    username = update.effective_chat.first_name
+    path = './' + username + '/'
+    filename = path + ide + '.sky'
     if os.path.isfile(filename):
         infile = open(filename, 'rb')
         s = pickle.load(infile)
