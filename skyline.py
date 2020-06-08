@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import datetime
+import random
 
 
 class Skyline:
@@ -160,7 +161,7 @@ class Skyline:
     # do the refelction of the current skyline
     def mirrorSkyline(self):
         #print('mirrorSkyline de la skyline.py')
-        l = (self.bl)
+        l = (self.bl).copy()
         l2 = []
 
         w = 0
@@ -203,16 +204,25 @@ class Skyline:
                 pos1 = elem[1]
                 l2.append((pos0,pos1,pos2))
 
-        self.bl = l2
+        elem = l2[0]
+        l2.pop(0)
+        s = Skyline('null',elem[0],elem[1],elem[2])
+        for k in l2:
+            s.addBuilding(k[0],k[1],k[2])
+        
+        lr = s.getBuildingsList()
+        return s  
+       
 
 
 
 
     # replicate the skyline n times
     def replicateSkyline(self, n):
-        #print('replicate de la skyline.py')
+        print('replicate de la skyline.py')
         
         l = (self.bl).copy()
+        lr = (self.bl).copy()
         w = 0
         minx = l[0][0]
         maxx = l[0][2]
@@ -250,15 +260,25 @@ class Skyline:
             w = w + ampOrig
             #print('l:')
             #print(l)
-            self.bl += laux
+            lr += laux
+
+        elem = lr[0]
+        lr.pop(0)
+        s = Skyline('null',elem[0],elem[1],elem[2])
+        for k in lr:
+            s.addBuilding(k[0],k[1],k[2])
+        
+        lr2 = s.getBuildingsList()
+        return s  
 
     # shift skyline n positions to the right
     def shiftRight(self, n):
         l = []
+        aux = (self.bl).copy()
         #print('shiftRight en skyline.py')
         #print('self.bl antes')
         #print(self.bl)
-        for k in self.bl:
+        for k in aux:
             #print(k)
             k = list(k)
             k[0] += n
@@ -266,7 +286,15 @@ class Skyline:
             k = tuple(k)
             l.append(k)
             #print(k)
-        self.bl = l
+        
+        elem = l[0]
+        l.pop(0)
+        s = Skyline('null',elem[0],elem[1],elem[2])
+        for k in l:
+            s.addBuilding(k[0],k[1],k[2])
+        
+        lr2 = s.getBuildingsList()
+        return s  
         #print('self.bl despues:')
         #print(self.bl)
 
@@ -274,10 +302,11 @@ class Skyline:
     # shift skyline n positions to the left
     def shiftLeft(self, n):
         l = []
+        aux = (self.bl).copy()
         #print('shiftLeft en skyline.py')
         #print('self.bl antes')
         #print(self.bl)
-        for k in self.bl:
+        for k in aux:
             #print(k)
             k = list(k)
             k[0] -= n
@@ -285,7 +314,14 @@ class Skyline:
             k = tuple(k)
             l.append(k)
             #print(k)
-        self.bl = l
+        elem = l[0]
+        l.pop(0)
+        s = Skyline('null',elem[0],elem[1],elem[2])
+        for k in l:
+            s.addBuilding(k[0],k[1],k[2])
+        
+        lr2 = s.getBuildingsList()
+        return s  
         #print('self.bl despues:')
         #print(self.bl)
 
@@ -350,9 +386,25 @@ class Skyline:
         x = b[0]
         return y*(z-x)
 
-    def random(n, h, w, xmin, xmax):
-        seed = 53
-        #TODO
+    def randomFunc(self,n, h, w, xmin, xmax):
+        print('ENTRO EN RANDOM FUNC')
+        a = random.randint(xmin, xmax-1)
+        b = random.randint(0, h)
+        c = random.randint(a+1, xmax)
+        s = Skyline('null',a,b,c)
+        it = 0
+        nn = n-1
+        while it < n-1:
+            a2 = random.randint(xmin, xmax-1)
+            b2 = random.randint(0, h)
+            c2 = random.randint(a2+1, xmax)
+            s.addBuilding(a2,b2,c2)
+            it += 1
+        l = s.getBuildingsList()
+        s.noOverlapping()
+        print('LISTA DE S: ', l)
+
+        return s
 
     def partition(self, array, start, end):
         pivot = array[start]

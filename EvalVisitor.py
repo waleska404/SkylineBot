@@ -122,9 +122,9 @@ class EvalVisitor(SkylineVisitor):
         w = int(ctx.NUM(2).getText())
         xmin = int(ctx.NUM(3).getText())
         xmax = int(ctx.NUM(4).getText())
-        s = Skyline.Skyline('null',0,0,0)
-        s.random(n,h,w,xmin,xmax)
-        return s
+        s = Skyline('null',0,0,0)
+        r = s.randomFunc(n,h,w,xmin,xmax)
+        return r
 
 
     
@@ -148,8 +148,8 @@ class EvalVisitor(SkylineVisitor):
         if (nop) and (nmenys) and (not nnum):
              print('entro en if mirror')
              s1 = self.visit(ctx.operation(0))
-             s1.mirrorSkyline()
-             return s1
+             r = s1.mirrorSkyline()
+             return r
 
         # intersection skyline case
         if (nop) and (nmult) and (not nnum):
@@ -171,8 +171,8 @@ class EvalVisitor(SkylineVisitor):
 
              n = int(ctx.NUM().getText())
              print(n)
-             s1.replicateSkyline(n)
-             return s1
+             r = s1.replicateSkyline(n)
+             return r
 
         # union skylines case
         if (nop) and (nmes) and (not nnum):
@@ -208,16 +208,16 @@ class EvalVisitor(SkylineVisitor):
              l = s1.getBuildingsList()
              print('bl en shitf right de eval')
              print(l)
-             s1.shiftRight(n)
-             return s1
+             r = s1.shiftRight(n)
+             return r
 
         # shift left skyline case
         if (nop) and (nmenys) and (nnum):
              print('entro en if shift left')
              s1 = self.visit(ctx.operation(0))
              n = int(ctx.NUM().getText())
-             s1.shiftLeft(n)
-             return s1
+             r = s1.shiftLeft(n)
+             return r
 
         # VAR
         if (nvar):
