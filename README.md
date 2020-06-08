@@ -52,7 +52,7 @@ Ahora con el link que @BotFather ha proporcionado podemos ir al chat del bot e i
 - **/save id:** Guarda un skyline definido con id: id.
 - **/load id:** Carga un skyline que hayas guardado previamente con id: id.
 
-************AQUI IMAGENTADFSAGAGR
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-20-26.png?token=AGIVB626XROCZIXFJBBXIAS647CCU)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-20-26.png?token=AGIVB626XROCZIXFJBBXIAS647CCU)
 
 ### Lenguaje
 
@@ -61,23 +61,23 @@ Ahora con el link que @BotFather ha proporcionado podemos ir al chat del bot e i
 ##### Simple
 Para crear un skyline simple con un edificio basta con especificar: ```(xmin, altura, xmax)``` donde **xmin** define la posición inicial del edificio, **xmax** la posición final, y **altura** la altura.
 
-IMAGEN DE EJEMPLO
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-45-34.png?token=AGIVB65XRJZ3XFLLOI2SS6S647CF2)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-45-34.png?token=AGIVB65XRJZ3XFLLOI2SS6S647CF2)
 
 ##### Compuesto
 Para crear un skyline compuesto por diversos edificios se especifica de la siguiente manera: ```[(xmin, altura, xmax),...]``` donde los parametros se refieren a las mismas características que en el apartado anterior.
 
-PONER IMAGEN DE EJEMLO
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-46-33.png?token=AGIVB622EJ4HDIDD7ZDI7S2647CHY)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-46-33.png?token=AGIVB622EJ4HDIDD7ZDI7S2647CHY)
 
 ##### Aleatorio
 Para generar un skyline aleatorio indicamos: ```{n, h, w, xmin, xmax}``` donde **n** especifica el numero de edificios,** h** que los edificios tendrán una altura aleatoria entre 0 y h, **w** que los edificios tendrán una anchura aleatoria entre 1 y w, y por ultimo **xmin** y **xmax** que los edificios tendrán una posición de x aleatoria entre estos dos valores.
 
 
-PONER IMAGEN DE EJEMPLO
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-03.png?token=AGIVB647FYCF7FBW74ZSX6C647CMC)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-03.png?token=AGIVB647FYCF7FBW74ZSX6C647CMC)
 
 ####Asignación
 En caso de querer darle un nombre a un skyline y poder operar con él solamente espeficicando su ID podemos hacer una asignación de la forma: ```a := (1,2,3)``` donde **'a'** corresponderia al ID del skyline (1,2,3).
 
-PONER IMAGEN DE EJEMPLO
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-25.png?token=AGIVB6YS7HN6QAYPTAXCEG2647CSI)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-47-25.png?token=AGIVB6YS7HN6QAYPTAXCEG2647CSI)
 
 ####Operaciones
 Se pueden realizar las siguientes operaciones con skylines:
@@ -89,39 +89,11 @@ Se pueden realizar las siguientes operaciones con skylines:
 - Desplazamiento a la izquierda: ```skyline - N```
 - Reflexión: ```-skyline```
 
+[![](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-48-06.png?token=AGIVB63HOE6FHKUBLPTKRH2647CUE)](https://raw.githubusercontent.com/waleska404/SkylineBot/master/fotosReadme/Captura%20de%20pantalla%20de%202020-06-08%2020-48-06.png?token=AGIVB63HOE6FHKUBLPTKRH2647CUE)
 
 
-## Deployment
 
-Add additional notes about how to deploy this on a live system
+## Autora
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Paula Boyano Ivars
 
