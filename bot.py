@@ -45,44 +45,36 @@ def author(update, context):
         chat_id=update.effective_chat.id, 
         text=mssg)
 
-def createSkyline(update, context):
-    #print("entro en la func createSkyline")
-    id = str(context.args[0])
-    #print("pillo el primer arg")
-    x = int(context.args[1])
-    #print("pillo el sec arg")
-    y = int(context.args[2])
-    #print("pillo el terc arg")
-    x2 = int(context.args[3])
-    #print("pillo el quart arg")
-
-    s = Skyline(id, x, y, x2)
-    #print("creo skyline")
-
-    s.plotProcessing()
-    #print("hago el plotProcessing")
-
-    id2 = id + '.png'
-    #print(id2)
-    context.bot.send_photo(
-        chat_id=update.effective_chat.id,
-        photo=open(id2,'rb'))
-    #print("supuestamente despues de enviar el mensaje")
-
 def save(update, context):
+    print('entro en save')
     id = str(context.args[0])
-    s = Skyline(id, x, y, x2)
+    s = context.user_data[id]
     filename = id +'.sky'
     outfile = open(filename, 'wb')
     pickle.dump(s,outfile)
     outfile.close()
+    print('salego en save')
 
 def load(update, context):
+    print('entro en load')
     id = str(context.args[0])
     filename = id + '.sky'
     infile = open(filename, 'rb')
     s = pickle.load(infile)
+    context.user_data[id] = s
     infile.close()
+    print('salgo en load')
+
+def lst(update, context):
+    print('entro en load')
+    id = str(context.args[0])
+    filename = id + '.sky'
+    infile = open(filename, 'rb')
+    s = pickle.load(infile)
+    context.user_data[id] = s
+    infile.close()
+    print('salgo en load')
+
 
 ############ NOT COMANDS MESSAGES PROCESSING ##########
 
@@ -132,6 +124,19 @@ def noCommand(update, context):
         chat_id=update.effective_chat.id,
         photo=open(id2,'rb'))
     print("supuestamente despues de enviar el mensaje")
+    a = s.getArea()
+    print(a, 'area en bot')
+    h = s.getHeight()
+    print(h, 'height en bot')
+    a = str(a)
+    h = str(h)
+    mssg = "area: " + a + ", altura: " + h
+    print(mssg)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=mssg)
+
+
 
 
 
@@ -149,7 +154,9 @@ dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(CommandHandler('author', author))
 
-dispatcher.add_handler(CommandHandler('createSkyline', createSkyline))
+dispatcher.add_handler(CommandHandler('save', save))
+dispatcher.add_handler(CommandHandler('load', load))
+dispatcher.add_handler(CommandHandler('lst', lst))
 
 dispatcher.add_handler(MessageHandler(Filters.text, noCommand))
 

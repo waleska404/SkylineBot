@@ -29,18 +29,28 @@ class Skyline:
 
     # retunrs the slyline's area
     def getArea(self):
-        sum = 0
+        print('ENTRO EN GET AREA')
+        self.noOverlapping()
+        print('salgo de no noOverlapping')
+        print(self.bl)
+        suma = 0
         for k in self.bl:
-            sum += buildingArea(k)
-        return sum
+            print('dentro del for')
+            s = self.buildingArea(k)
+            suma += s
+        print('VOY A SLAIR')
+        return suma
 
     # returns the skyline's height
     def getHeight(self):
-        max = 0
+        print('ENTRE EN GET HEIGH')
+        maxi = 0
         for k in self.bl:
-            if k[1] > max:
-                max = k[1]
-        return max
+            if k[1] > maxi:
+                maxi = k[1]
+        print('VOY A SALIR')
+        print(maxi)
+        return maxi
 
 
     # ########OPERATIONS########## #
@@ -380,11 +390,12 @@ class Skyline:
         else:
             return False
     
-    def buildingArea(b):
+    def buildingArea(self, b):
         y = b[1]
         z = b[2]
         x = b[0]
-        return y*(z-x)
+        a = (y+1)*(z-x)
+        return a
 
     def randomFunc(self,n, h, w, xmin, xmax):
         print('ENTRO EN RANDOM FUNC')

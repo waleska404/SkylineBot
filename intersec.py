@@ -1,31 +1,25 @@
+buildings1 = [(1,2,3),(4,1,8),(8,5,9),(10,4,11),(13,4,14),(16,2,17),(19,4,22),(22,3,24)]
+buildings2 = [(2,3,5),(7,3,9),(10,3,12),(12,2,15),(15,2,18),(19,3,21),(22,2,24)]
 
 lim11=1
 lim12=24
 
 lim21 = 2
 lim22 = 24
-buildings1 = [(1,2,3),(4,1,8),(8,5,9),(10,4,11),(13,4,14),(16,2,17),(19,4,22),(22,3,24)]
-buildings2 = [(2,3,5),(7,3,9),(10,3,12),(12,2,15),(15,2,18),(19,3,21),(22,2,24)]
-
-edges1 = []
-edges1.extend([building[0],building[2]] for building in buildings1)
-edges1 = sorted(sum(edges1,[])) #sorting and flatening the list of building edges
-#print(edges1)
-
-
-edges2 = []
-edges2.extend([building[0],building[2]] for building in buildings2)
-edges2 = sorted(sum(edges2,[])) #sorting and flatening the list of building edges
-#print(edges2)
 
 limLeft = max(lim11, lim21)
 limRight = min(lim12, lim22)
 
-print('LIM LEFT RIGHT')
-print(limLeft, limRight)
- 
-current = 0
-points = []
+edges1 = []
+edges2 = []
+
+edges1.extend([building[0],building[2]] for building in buildings1)
+edges1 = (sum(edges1,[])) #sorting and flatening the list of building edges
+#print(edges1)
+
+edges2.extend([building[0],building[2]] for building in buildings2)
+edges2 = (sum(edges2,[])) #sorting and flatening the list of building edges
+#print(edges2)
 
 edaux = edges1 + edges2
 edaux = sorted(edaux)
@@ -33,6 +27,15 @@ edaux = sorted(edaux)
 edges = [edg for edg in edaux if(edg >= limLeft and edg <= limRight)]
 edges = set(edges)
 edges = list(edges)
+
+
+print('LIM LEFT RIGHT')
+print(limLeft, limRight)
+ 
+current = 0
+points = []
+
+
 print('EDGES')
 print(edges)
 
