@@ -239,8 +239,8 @@ class EvalVisitor(SkylineVisitor):
                 print(id2)
                 return d2 #le devuelvo el skyline con id var
             else:
-                s = Skyline('null', 0, 0, 0)
-                #TODO NO SE COMO GESTIONARLO
+                s = Skyline('NOEXISTE404', 0, 0, 0)
+                #TODO: NO SE COMO GESTIONARLO
                 #QUIZA DECIRLE QUE ESTA UTILIZANDO UNA VARIBALE SIN VALOR
                 return s
 

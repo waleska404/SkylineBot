@@ -13,7 +13,7 @@ from SkylineLexer import SkylineLexer
 from SkylineParser import SkylineParser
 from EvalVisitor import EvalVisitor
 
-
+import os
 import pickle
 
 
@@ -28,13 +28,13 @@ def start(update, context):
 # el bot contesta con una lista de todas las posibles comandas
 def help(update, context):
     msg = ''' Puedes interactuar conmigo utilizando los siguientes comandos:
-- */start*
-- */help*
-- */author*
-- */lst*
-- */clean*
-- */save id*
-- */load id*
+- */start* : Inicia la conversación conmigo.
+- */help* : Obten una lista de todos los comandos que me puedes enviar.
+- */author* : Información sobre el autor de este bot.
+- */lst* : Muestra los identificadores definidos y su correspondiente area.
+- */clean* : Borra todos los identificadores definidos.
+- */save id* : Guarda un skyline definido con id: id.
+- */load id* : Carga un skyline que hayas guardado previamente con id: id.
 '''
     context.bot.send_message(chat_id=update.message.chat_id, text=msg, \
          parse_mode=ParseMode.MARKDOWN)
@@ -47,33 +47,51 @@ def author(update, context):
 
 def save(update, context):
     print('entro en save')
-    id = str(context.args[0])
-    s = context.user_data[id]
-    filename = id +'.sky'
-    outfile = open(filename, 'wb')
-    pickle.dump(s,outfile)
-    outfile.close()
-    print('salego en save')
+
+    ide = str(context.args[0])
+    if (ide in context.user_data):
+        print('entro en el if')
+        s = context.user_data[ide]
+        filename = ide +'.sky'
+        outfile = open(filename, 'wb')
+        pickle.dump(s,outfile)
+        outfile.close()
+        print('salego en save')
+        mssg = "El skyline con identificador '%s' ha sido guardado." %(ide)
+    else:
+        mssg = "El identificador que estas intentando guardar no está definido."
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=mssg)
 
 def load(update, context):
     print('entro en load')
-    id = str(context.args[0])
-    filename = id + '.sky'
-    infile = open(filename, 'rb')
-    s = pickle.load(infile)
-    context.user_data[id] = s
-    infile.close()
-    print('salgo en load')
+    ide = str(context.args[0])
+    filename = ide + '.sky'
+    if os.path.isfile(filename):
+        infile = open(filename, 'rb')
+        s = pickle.load(infile)
+        context.user_data[ide] = s
+        infile.close()
+        print('salgo en load')
+        mssg = "El skyline con identificador '%s' se ha cargado." %(ide)
+    else:
+        mssg = "El skyline que estas intentando cargar no ha sido guardado previamente."
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=mssg)
 
 def lst(update, context):
     k = (context.user_data).keys()
-    mssg = 'Los identificadores definidos hasta el momento son: '
-    for i in k:
-        s = context.user_data[i]
-        a = s.getArea()
-        m = 'id: ' + str(i) + ', area: ' + str(a)
-        mssg += m
-
+    if k:
+        mssg = 'Los identificadores definidos hasta el momento son:\n'
+        for i in k:
+            s = context.user_data[i]
+            a = s.getArea()
+            m = '-> id: ' + str(i) + ', area: ' + str(a) + '\n'
+            mssg += m
+    else:
+        mssg = 'No hay identificadores definidos.'
     context.bot.send_message(
         chat_id=update.effective_chat.id, 
         text=mssg)
@@ -125,7 +143,9 @@ def noCommand(update, context):
     #print("hago el plotProcessing")
 
     id = s.getID()
-
+    if id == 'NOEXISTE404':
+        mssg = 'Ese identificador no está definido.'
+    else:
     #if id == 'null':
      #   id = str(datetime.datetime.now())
      #  id = id.replace(" ","")
@@ -133,19 +153,19 @@ def noCommand(update, context):
      #   id = id.replace(":","")
      #   id = id.replace("-","")
     #id = 'plot'
-    id2 = id + '.png'
-    print(id2)
-    context.bot.send_photo(
-        chat_id=update.effective_chat.id,
-        photo=open(id2,'rb'))
-    print("supuestamente despues de enviar el mensaje")
-    a = s.getArea()
-    print(a, 'area en bot')
-    h = s.getHeight()
-    print(h, 'height en bot')
-    a = str(a)
-    h = str(h)
-    mssg = "area: " + a + ", altura: " + h
+        id2 = id + '.png'
+        print(id2)
+        context.bot.send_photo(
+            chat_id=update.effective_chat.id,
+            photo=open(id2,'rb'))
+        print("supuestamente despues de enviar el mensaje")
+        a = s.getArea()
+        print(a, 'area en bot')
+        h = s.getHeight()
+        print(h, 'height en bot')
+        a = str(a)
+        h = str(h)
+        mssg = "area: " + a + "\naltura: " + h
     print(mssg)
     context.bot.send_message(
         chat_id=update.effective_chat.id, 
